@@ -1,0 +1,4 @@
+export default{
+    START_LOGIN:'START_LOGIN',
+    LOGIN_SUCCESS:' LOGIN_SUCCESS',
+}

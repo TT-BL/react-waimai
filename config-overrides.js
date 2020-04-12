@@ -6,7 +6,7 @@ module.exports = override(
         libraryDirectory: 'es',
         style: true,
     }),
-    // addDecoratorsLegacy(),
+    addDecoratorsLegacy(),
     addLessLoader({
         javascriptEnabled: true,
         modifyvars:theme,

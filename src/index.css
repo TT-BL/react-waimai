@@ -3,6 +3,7 @@ body {
 }
 body #root {
   height: 100%;
+  position: relative;
 }
 body #root .App {
   height: 100%;

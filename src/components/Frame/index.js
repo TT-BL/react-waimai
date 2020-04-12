@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
-import { Layout, Menu, Breadcrumb } from 'antd';
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+import { withRouter} from 'react-router-dom'
+import { Layout, Menu, Breadcrumb } from 'antd'
 import './index.less'
 
-const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
-export default class Frame extends Component {
+@withRouter
+class Frame extends Component {
+    onMenuClick = ({ key }) => {
+        // console.log(key)
+        this.props.history.push(key)
+    }
     render() {
+
         return (
             <Layout>
                 <Header className="header">
@@ -20,49 +25,13 @@ export default class Frame extends Component {
                             defaultSelectedKeys={['1']}
                             defaultOpenKeys={['sub1']}
                             style={{ height: '100%', borderRight: 0 }}
+                            onClick={this.onMenuClick}
                         >
-                            <SubMenu
-                                key="sub1"
-                                title={
-                                    <span>
-                                        <UserOutlined />
-                                        数据统计
-                                    </span>
-                                }
-                            >
-                                <Menu.Item key="1">option1</Menu.Item>
-                                <Menu.Item key="2">option2</Menu.Item>
-                                <Menu.Item key="3">option3</Menu.Item>
-                                <Menu.Item key="4">option4</Menu.Item>
-                            </SubMenu>
-                            <SubMenu
-                                key="sub2"
-                                title={
-                                    <span>
-                                        <LaptopOutlined />
-                                        商品信息
-                                    </span>
-                                }
-                            >
-                                <Menu.Item key="5">添加</Menu.Item>
-                                <Menu.Item key="6">删除</Menu.Item>
-                                <Menu.Item key="7">修改</Menu.Item>
-                                <Menu.Item key="8">查询</Menu.Item>
-                            </SubMenu>
-                            <SubMenu
-                                key="sub3"
-                                title={
-                                    <span>
-                                        <NotificationOutlined />
-                                    设置
-                                </span>
-                                }
-                            >
-                                <Menu.Item key="9">option9</Menu.Item>
-                                <Menu.Item key="10">option10</Menu.Item>
-                                <Menu.Item key="11">option11</Menu.Item>
-                                <Menu.Item key="12">option12</Menu.Item>
-                            </SubMenu>
+                            {this.props.route.map((route) => {
+                                    return (
+                                        <Menu.Item title={route.title} key={route.pathname}>{route.title}</Menu.Item>
+                                    )
+                            })}
                         </Menu>
                     </Sider>
                     <Layout style={{ padding: '0 24px 24px' }}>
@@ -79,11 +48,12 @@ export default class Frame extends Component {
                                 minHeight: 280,
                             }}
                         >
-                            Content
+                           {this.props.children}
                         </Content>
                     </Layout>
                 </Layout>
-            </Layout>
+            </Layout >
         )
     }
 }
+export default Frame
