@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom'
+import {connect} from 'react-redux'
 
 import { adminRouter } from './routers'
 import { Frame } from './components'
-import { getRestaurantOrders } from './requests'
+import { getRestaurant } from './requests'
 
-export default class App extends Component {
-  componentWillMount(){
-    getRestaurantOrders().then(response=>{
+const mapState=(state)=>({
+  isLogin:state.users.isLogin
+})
+@connect(mapState)
+class App extends Component {
+  componentDidMount(){
+    getRestaurant().then(response=>{
       console.log(response);
     })
   }
   render() {
     return(
+      this.props.isLogin?
       <div className="App">
         <Frame route={adminRouter}>
           {adminRouter.map(route => {
@@ -20,7 +26,9 @@ export default class App extends Component {
           })}
           <Redirect to='/admin/dashboard' from='/admin'></Redirect>
         </Frame>
-      </div>
+      </div>:
+      <Redirect to='/login'></Redirect>
     )
   }
 }
+export default App

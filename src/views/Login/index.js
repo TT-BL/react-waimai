@@ -12,11 +12,9 @@ const mapState = (state) => ({
 
 class Login extends Component {
     onFinish = values => {
-        console.log('Success:', values);
         this.props.login(values)
     };
     render() {
-        console.log(this.props.isLogin)
         const layout = {
             labelCol: { span: 8 },
             wrapperCol: { span: 8 },

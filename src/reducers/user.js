@@ -1,6 +1,5 @@
 import actionTypes from '../actions/actionTypes'
 const isLogin=localStorage.getItem('username')
-console.log(isLogin);
 
 const initState = {
     isLogin,

@@ -6,9 +6,15 @@ export const adminLogin=(data)=>{
     }
     return _post(req)
 }
-export const getRestaurantOrders=()=>{
+export const getRestaurant=()=>{
     const req={
         url:'/v1/my_restaurant'
     }
     return _get(req)
+}
+export const getFoods=()=>{
+    const req={
+        url:'/v1/my_foods'
+    }
+    return _get(req) 
 }
