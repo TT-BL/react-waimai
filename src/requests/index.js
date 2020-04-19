@@ -18,3 +18,9 @@ export const getFoods=()=>{
     }
     return _get(req) 
 }
+export const getRestaurantOrders =()=>{
+    const req={
+        url:'/v1/my_restaurant_order'
+    }
+    return _get(req) 
+}

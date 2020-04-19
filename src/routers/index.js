@@ -20,23 +20,22 @@ export const adminRouter=[
         pathname:'/admin/foods',
         component:Foods,
         title:'商品管理',
-        routes:[
-            {
-                pathname:'/admin/foods/add',
-                component:AddFood,
-                title:'添加商品',
-            },
-            {
-                pathname:'/admin/foods/delete',
-                component:DeleteFood,
-                title:'删除商品',
-            },
-            {
-                pathname:'/admin/foods/update',
-                component:UpdateFood,
-                title:'更新商品',
-            },
-        ]
+        exact:true
+    },
+    {
+        pathname:'/admin/foods/add',
+        component:AddFood,
+        title:'添加商品',
+    },
+    {
+        pathname:'/admin/foods/delete',
+        component:DeleteFood,
+        title:'删除商品',
+    },
+    {
+        pathname:'/admin/foods/update',
+        component:UpdateFood,
+        title:'更新商品',
     },
     {
         pathname:'/admin/setting',

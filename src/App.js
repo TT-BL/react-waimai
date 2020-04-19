@@ -22,7 +22,7 @@ class App extends Component {
       <div className="App">
         <Frame route={adminRouter}>
           {adminRouter.map(route => {
-            return <Route key={route.pathname} path={route.pathname} component={route.component}></Route>
+            return <Route key={route.pathname} path={route.pathname} component={route.component} exact={route.exact}></Route>
           })}
           <Redirect to='/admin/dashboard' from='/admin'></Redirect>
         </Frame>

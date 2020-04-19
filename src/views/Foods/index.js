@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
-import { Table, Button,Card} from 'antd';
+import { Table, Button,Card,Modal} from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { getFoods } from '../../requests'
+const { confirm } = Modal
 
 const columnTitle = {
+    id:'id',
     name: '食品名称',
     price: '价格',
-    month_cales: '月售量',
+    month_saled: '月售量',
     praise_num: '点赞数'
 }
 class Foods extends Component {
@@ -17,24 +20,59 @@ class Foods extends Component {
             isLoading: false
         }
     }
+    delete=(record)=>{
+        confirm({
+            title: '确定删除该商品吗?',
+            icon: <ExclamationCircleOutlined />,
+            content: record.name,
+            okText: '确定',
+            okType: 'danger',
+            cancelText: '取消',
+            onOk() {
+              console.log('OK');
+            },
+            onCancel() {
+              console.log('Cancel');
+            },
+          });
+    }
+    edit=(record)=>{
+        this.props.history.push('/admin/foods/update')
+    }
     createColumns(columnsKeys) {
         let columns = columnsKeys.map(value => {
+            if(value==='price'){
+                return {
+                    title: columnTitle[value],
+                    dataIndex: value,
+                    key: value,
+                    align:'center',
+                    render:(record)=>{
+                        return '$'+record
+                    }
+                }
+            }
             return {
                 title: columnTitle[value],
                 dataIndex: value,
                 key: value,
+                align:'center'
             }
         })
         columns.push({
             title: '操作',
             dataIndex: 'actions',
             key: 'actions',
+            align:'center',
             render: (text, record, index) => {
                 return (
                     <>
                         <Button size='small' type='primary'
+                        onClick={this.edit.bind(this,record)}
                         >编辑</Button>
+                        
                         <Button size='small' type='danger'
+                        onClick={this.delete.bind(this,record)}
                         >删除</Button>
                     </>
                 )
