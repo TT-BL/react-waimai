@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Table, Button,Card,Modal} from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons'
-import { getFoods } from '../../requests'
+import { getFoods,deleteFood} from '../../requests'
 const { confirm } = Modal
 
 const columnTitle = {
@@ -29,7 +29,10 @@ class Foods extends Component {
             okType: 'danger',
             cancelText: '取消',
             onOk() {
-              console.log('OK');
+                deleteFood(record.id).then(resp=>{
+                    console.log(resp);
+                    
+                })
             },
             onCancel() {
               console.log('Cancel');
@@ -37,7 +40,10 @@ class Foods extends Component {
           });
     }
     edit=(record)=>{
-        this.props.history.push('/admin/foods/update')
+        this.props.history.push(`/admin/foods/update/${record.id}`)
+    }
+    add=()=>{
+        this.props.history.push('/admin/foods/add')
     }
     createColumns(columnsKeys) {
         let columns = columnsKeys.map(value => {
@@ -81,6 +87,7 @@ class Foods extends Component {
         return columns
     }
     getData=() =>{
+        // console.log(this)
         this.setState({
             isLoading: true
         })
@@ -117,7 +124,7 @@ class Foods extends Component {
     }
     render() {
         return (
-            <Card title="食品列表" extra={<Button type='primary'>添加食物</Button>}>
+            <Card title="食品列表" extra={<Button type='primary' onClick={this.add.bind(this)}>添加食物</Button>}>
                 <Table columns={this.state.columns} dataSource={this.state.data} loading={this.state.isLoading} rowKey={record=>record.id}
                 />
             </Card>

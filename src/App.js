@@ -6,6 +6,7 @@ import { adminRouter } from './routers'
 import { Frame } from './components'
 import { getRestaurant } from './requests'
 
+const route=adminRouter.filter(value=>value.isNav)
 const mapState=(state)=>({
   isLogin:state.users.isLogin
 })
@@ -13,17 +14,17 @@ const mapState=(state)=>({
 class App extends Component {
   componentDidMount(){
     getRestaurant().then(response=>{
-      console.log(response);
+      // console.log(response);
     })
   }
   render() {
     return(
       this.props.isLogin?
       <div className="App">
-        <Frame route={adminRouter}>
+        <Frame route={route}>
           {adminRouter.map(route => {
             return <Route key={route.pathname} path={route.pathname} component={route.component} exact={route.exact}></Route>
-          })}
+           })}
           <Redirect to='/admin/dashboard' from='/admin'></Redirect>
         </Frame>
       </div>:
