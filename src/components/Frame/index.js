@@ -1,21 +1,40 @@
 import React, { Component } from 'react'
 import { withRouter} from 'react-router-dom'
-import { Layout, Menu, Breadcrumb } from 'antd'
+import {connect} from 'react-redux'
+import { Layout, Menu, Dropdown } from 'antd'
+import { DownOutlined } from '@ant-design/icons';
 import './index.less'
 
 const { Header, Content, Sider } = Layout;
 
+const mapState=(state)=>({
+    name:state.retaurants.name
+})
 @withRouter
+@connect(mapState)
 class Frame extends Component {
     onMenuClick = ({ key }) => {
         this.props.history.push(key)
     }
     render() {
-        // console.log(this.props);
+       const username=localStorage.getItem('username')
+       const menu = (
+        <Menu onClick={this.onMenuClick}>
+          <Menu.Item key="/admin/comments">用户评论</Menu.Item>
+          <Menu.Item key="/admin/setting">设置</Menu.Item>
+          <Menu.Divider />
+          <Menu.Item key="3">退出登录</Menu.Item>
+        </Menu>
+      );
         return (
             <Layout>
                 <Header className="header">
                     <div className="logo" />
+                    <Dropdown overlay={menu} trigger={['click']}>
+                    <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+                    欢迎您，{username} <DownOutlined />
+                    </a>
+                    </Dropdown>
                 </Header>
                 <Layout>
                     <Sider width={200} className="site-layout-background">
@@ -34,11 +53,9 @@ class Frame extends Component {
                         </Menu>
                     </Sider>
                     <Layout style={{ padding: '0 24px 24px' }}>
-                        <Breadcrumb style={{ margin: '16px 0' }}>
-                            <Breadcrumb.Item>Home</Breadcrumb.Item>
-                            <Breadcrumb.Item>List</Breadcrumb.Item>
-                            <Breadcrumb.Item>App</Breadcrumb.Item>
-                        </Breadcrumb>
+                        <div style={{ margin: '16px 0' }}>
+                            {this.props.name}
+                        </div>
                         <Content
                             className="site-layout-background"
                             style={{

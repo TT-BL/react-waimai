@@ -1,21 +1,13 @@
 import actionTypes from "../actions/actionTypes"
-const initState=
-{
-    data:[],
-    isLoading:false
+const initState={
+    count:0
 }
 export default (state=initState,actions)=>{
     switch(actions.type){
-        case actionTypes.START_GET_FOODS:
-            return{
-                ...state,
-                isLoading:true
-            }
-        case actionTypes.GET_FOODS_SUCCESS:
+        case actionTypes.GET_RESTAURANT_SUCCESS:
             return {
-                ...state,
-                data:[...actions.payload],
-                isLoading:false
+                name:actions.payload.name,
+                count:actions.payload.count
             }
         default:
             return state

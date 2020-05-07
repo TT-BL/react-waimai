@@ -65,9 +65,26 @@ export const updateFood=(data)=>{
     }
     return _post(req) 
 }
+//获取七牛云凭证
 export const updateToken=()=>{
     const req={
         url:'/service/uploadtoken'
+    }
+    return _get(req) 
+}
+//获取买家评论信息
+export const getComments=(data)=>{
+    const req={
+        data,
+        url:'/v1/my_restaurant_comment'
+    }
+    return _get(req) 
+}
+//获取餐馆评论数
+export const getCommentsCount=(data)=>{
+    const req={
+        data,
+        url:'/v1/comment_count'
     }
     return _get(req) 
 }

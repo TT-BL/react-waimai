@@ -1,23 +1,31 @@
 import actionType from './actionTypes'
-import {getMyfoods} from '../requests'
-const startGetFoods=()=>{
+import {getRestaurant,getCommentsCount} from '../requests'
+const startGetRetaurant=()=>{
     return{
-        type:actionType.START_GET_FOODS
+        type:actionType.START_GET_RESTAURANT
     }
 }
-const getFoodSuccess=(foodInfo)=>{
+const getRestaurantSuccess=(foodInfo)=>{
+    console.log(foodInfo);
+    
     return{
-        type:actionType.LOGIN_SUCCESS,
+        type:actionType.GET_RESTAURANT_SUCCESS,
         payload:foodInfo
     }
 }
-export const getFoods=()=>{
+export const getRetaurant=()=>{
     return dispatch=>{
-        dispatch(startGetFoods)
-        getMyfoods().then(response=>{
+        dispatch(startGetRetaurant)
+        getRestaurant().then(response=>{
             console.log(response)
             if(response.data.status=200){
-                dispatch(getFoodSuccess(response.data.foods))
+                getCommentsCount({restaurant_id:response.data.data.id}).then(resp=>{
+                    console.log(resp);
+                    
+                    if(resp.data.status===200){
+                        dispatch(getRestaurantSuccess({...response.data.data,count:resp.data.data}))
+                    }
+                })
             }
             else{
                 console.log(response.data.message);

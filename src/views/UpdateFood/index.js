@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { getFood,updateToken,updateFood } from '../../requests'
 import axios from 'axios'
-import { Form, Input, InputNumber, Button, Card, Spin,Upload } from 'antd';
+import { Form, Input, InputNumber, Button, Card, Spin,Upload,message} from 'antd';
 import './index.less'
 
 export default class UpdateFood extends Component {
@@ -68,11 +68,17 @@ export default class UpdateFood extends Component {
         this.getQinniuToken()
     }
     onFinish=(values)=>{
-        delete values.user
-        console.log(values);
-        const updateFood={...values,pic:this.state.pic}
-        updateFood().then(resp=>{
-            
+        delete values.pic
+        const foods_id=Number(this.props.match.params.id)
+        // console.log(food_id);
+        const foodInfo={...values,foods_id,pic_url:this.state.pic}
+        console.log(foodInfo);
+        updateFood(foodInfo).then(resp=>{
+            console.log(resp)
+            if(resp.data.status===200){
+                message.success('修改成功')
+                this.props.history.goBack()
+            }
         })
     }
     render() {
@@ -113,7 +119,7 @@ export default class UpdateFood extends Component {
                             <Form.Item name='description' label="商品描述">
                                 <Input />
                             </Form.Item>
-                            <Form.Item name={['user', 'introduction']} label="上传图片">
+                            <Form.Item name='pic' label="上传图片">
                             <Upload showUploadList={false} 
                            customRequest={this.handleUploadAvatar}
                             >

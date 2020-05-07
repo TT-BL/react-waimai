@@ -1,4 +1,4 @@
-import {Login,NotFound,DashBoard,Setting,Foods,AddFood,UpdateFood} from '../views'
+import {Login,NotFound,DashBoard,Setting,Foods,AddFood,UpdateFood,Comments} from '../views'
 export const mainRouter=[
     {
         pathname:'/login',
@@ -32,6 +32,11 @@ export const adminRouter=[
         pathname:'/admin/foods/update/:id',
         component:UpdateFood,
         title:'更新商品',
+    },
+    {
+        pathname:'/admin/comments',
+        component:Comments,
+        title:'买家评论',
     },
     {
         pathname:'/admin/setting',

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Input, InputNumber, Button, Card,Select,Upload,Spin } from 'antd';
+import { Form, Input, InputNumber, Button, Card,Select,Upload,Spin,message } from 'antd';
 import axios from 'axios'
 import {getRestaurantCategory,updateToken,addFood} from '../../requests'
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
@@ -63,9 +63,13 @@ export default class AddFood extends Component {
         }
         skus.push(obj)
         const foodInfo={...values,category_id:category.id,pic_url:this.state.pic,skus}
-        console.log(foodInfo)
+        // console.log(foodInfo)
         addFood(foodInfo).then(resp=>{
-            console.log(resp)
+            if(resp.data.status===200){
+                message.success('添加成功')
+                console.log(this.props);
+                this.props.history.goBack()
+            }
         })
     }
     render() {

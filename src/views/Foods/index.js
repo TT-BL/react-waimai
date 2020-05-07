@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table, Button,Card,Modal} from 'antd';
+import { Table, Button,Card,Modal,message} from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { getFoods,deleteFood} from '../../requests'
 const { confirm } = Modal
@@ -21,6 +21,7 @@ class Foods extends Component {
         }
     }
     delete=(record)=>{
+        const that=this
         confirm({
             title: '确定删除该商品吗?',
             icon: <ExclamationCircleOutlined />,
@@ -30,12 +31,12 @@ class Foods extends Component {
             cancelText: '取消',
             onOk() {
                 deleteFood(record.id).then(resp=>{
-                    console.log(resp);
-                    
+                    message.success('删除成功')
+                    that.getData()
                 })
             },
             onCancel() {
-              console.log('Cancel');
+            //   console.log('Cancel');
             },
           });
     }
