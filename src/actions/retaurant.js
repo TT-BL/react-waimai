@@ -6,8 +6,6 @@ const startGetRetaurant=()=>{
     }
 }
 const getRestaurantSuccess=(foodInfo)=>{
-    console.log(foodInfo);
-    
     return{
         type:actionType.GET_RESTAURANT_SUCCESS,
         payload:foodInfo
@@ -17,11 +15,8 @@ export const getRetaurant=()=>{
     return dispatch=>{
         dispatch(startGetRetaurant)
         getRestaurant().then(response=>{
-            console.log(response)
             if(response.data.status=200){
                 getCommentsCount({restaurant_id:response.data.data.id}).then(resp=>{
-                    console.log(resp);
-                    
                     if(resp.data.status===200){
                         dispatch(getRestaurantSuccess({...response.data.data,count:resp.data.data}))
                     }

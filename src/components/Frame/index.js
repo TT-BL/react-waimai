@@ -1,20 +1,37 @@
 import React, { Component } from 'react'
-import { withRouter} from 'react-router-dom'
+import { withRouter,Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
-import { Layout, Menu, Dropdown } from 'antd'
-import { DownOutlined } from '@ant-design/icons';
+import {logout} from '../../actions/user'
+import { Layout, Menu, Dropdown,Modal} from 'antd'
+import { ExclamationCircleOutlined,DownOutlined} from '@ant-design/icons'
 import './index.less'
 
 const { Header, Content, Sider } = Layout;
+const {confirm}=Modal
 
 const mapState=(state)=>({
-    name:state.retaurants.name
+    name:state.retaurants.name,
+    isLogin:state.users.isLogin
 })
 @withRouter
-@connect(mapState)
+@connect(mapState,{logout})
 class Frame extends Component {
     onMenuClick = ({ key }) => {
-        this.props.history.push(key)
+        if(key==='/login'){
+            const that=this
+            confirm({
+                title: '确定退出登录吗',
+                icon: <ExclamationCircleOutlined />,
+                onOk() {
+                    that.props.logout()
+                },
+                onCancel() {
+                },
+              });
+        }
+        else{
+            this.props.history.push(key)
+        }
     }
     render() {
        const username=localStorage.getItem('username')
@@ -23,10 +40,11 @@ class Frame extends Component {
           <Menu.Item key="/admin/comments">用户评论</Menu.Item>
           <Menu.Item key="/admin/setting">设置</Menu.Item>
           <Menu.Divider />
-          <Menu.Item key="3">退出登录</Menu.Item>
+          <Menu.Item key="/login">退出登录</Menu.Item>
         </Menu>
       );
         return (
+            this.props.isLogin?
             <Layout>
                 <Header className="header">
                     <div className="logo" />
@@ -68,7 +86,8 @@ class Frame extends Component {
                         </Content>
                     </Layout>
                 </Layout>
-            </Layout >
+            </Layout >:
+             <Redirect to='/login'></Redirect>
         )
     }
 }

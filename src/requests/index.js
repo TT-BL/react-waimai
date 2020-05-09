@@ -88,3 +88,17 @@ export const getCommentsCount=(data)=>{
     }
     return _get(req) 
 }
+//获取订单内商品数量
+export const getOrderFoodsCount=()=>{
+    const req={
+        url:'/v1/order_foods_count'
+    }
+    return _get(req) 
+}
+export const updatePassword=(data)=>{
+    const req={
+        data,
+        url:'admin/update_passwd'
+    }
+    return _post(req) 
+}

@@ -13,6 +13,12 @@ const LoginSuccess=(userInfo)=>{
         }
     }
 }
+const quit=()=>{
+    localStorage.removeItem('username')
+    return{
+        type:actionType.QUIT_LOGIN
+    }
+}
 export const login=(userInfo)=>{
     return dispatch=>{
         dispatch(StartLogin())
@@ -22,8 +28,11 @@ export const login=(userInfo)=>{
                 dispatch(LoginSuccess({username:response.data.username,avatar:response.data.avatar})  )  
             }
             else{
-                console.log(response.data.message) 
+                alert(response.data.message) 
             }
         })
     }
+}
+export const logout=()=>{
+    return dispatch=>dispatch(quit())
 }

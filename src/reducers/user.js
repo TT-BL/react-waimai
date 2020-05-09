@@ -19,6 +19,11 @@ export default (state = initState, action) => {
                 isLoading: false,
                 isLogin: true,
             }
+        case actionTypes.QUIT_LOGIN:
+            return {
+                isLogin:false,
+                isLoading: false
+            }
         default:
             return state
     }

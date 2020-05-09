@@ -4,7 +4,6 @@ import {connect} from 'react-redux'
 
 import { adminRouter } from './routers'
 import { Frame } from './components'
-import { getRestaurant } from './requests'
 import {getRetaurant} from './actions/retaurant'
 
 const route=adminRouter.filter(value=>value.isNav)
@@ -26,6 +25,7 @@ class App extends Component {
               return <Route key={route.pathname} path={route.pathname} component={route.component} exact={route.exact}></Route>
             })}
             <Redirect to='/admin/dashboard' from='/admin'></Redirect>
+            <Redirect to='/404' ></Redirect>
           </Switch>
         </Frame>
       </div>:
